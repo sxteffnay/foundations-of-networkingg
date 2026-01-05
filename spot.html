@@ -1,239 +1,319 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>The Spot</title>
+  <meta charset="UTF-8">
+  <title>The Spot</title>
 
-    <!-- Poppins Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Poppins Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            background: url('images/dar.png') no-repeat center center/cover;
-            color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
+    body{
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: url('images/dar.png') no-repeat center center/cover;
+      color: #eaf6ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body.loaded{ opacity: 1; }
 
-            body.loaded {
-                opacity: 1;
-            }
+    /* subtle dark overlay so text stays readable (NOT blur/glass) */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(0,140,255,.15), transparent 55%),
+                  radial-gradient(circle at 70% 80%, rgba(0,255,210,.10), transparent 55%),
+                  rgba(0,0,0,.35);
+      z-index: -2;
+      pointer-events: none;
+    }
 
-        .wrapper {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    /* floating bubbles glow (very light, not too much) */
+    body::after{
+      content:"";
+      position: fixed;
+      inset: -20%;
+      background:
+        radial-gradient(circle, rgba(255,255,255,.10) 0 2px, transparent 3px) 0 0 / 120px 120px,
+        radial-gradient(circle, rgba(140,210,255,.10) 0 2px, transparent 3px) 40px 60px / 160px 160px;
+      opacity: .35;
+      z-index: -1;
+      pointer-events:none;
+      animation: drift 14s linear infinite;
+    }
 
-        /* GLASS CARD */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-            padding: 38px 42px;
-            max-width: 760px;
-            width: 88%;
-            text-align: center;
-            animation: float 6s ease-in-out infinite;
-        }
+    @keyframes drift{
+      from{ transform: translateY(0); }
+      to{ transform: translateY(-60px); }
+    }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
+    .wrapper{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 28px 0;
+    }
 
-            50% {
-                transform: translateY(-5px);
-            }
+    /* GLASS CARD (slightly nicer + subtle neon glow border) */
+    .glass-card{
+      background: rgba(10, 25, 55, 0.35);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 22px;
+      border: 1px solid rgba(140, 210, 255, 0.35);
+      box-shadow:
+        0 18px 55px rgba(0,0,0,0.55),
+        0 0 0 1px rgba(255,255,255,0.06) inset,
+        0 0 28px rgba(70,180,255,0.18);
+      padding: 38px 42px;
+      max-width: 760px;
+      width: 88%;
+      text-align: center;
+      animation: float 6s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
 
-            100% {
-                transform: translateY(0);
-            }
-        }
+    /* soft highlight sweep */
+    .glass-card::before{
+      content:"";
+      position:absolute;
+      inset:-60px;
+      background: radial-gradient(circle at 20% 10%, rgba(255,255,255,.14), transparent 55%);
+      pointer-events:none;
+    }
 
-        .top-box {
-            border: 2px solid #000;
-            padding: 10px 20px;
-            font-size: 13px;
-            width: fit-content;
-            margin: 0 auto 30px;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
+    @keyframes float{
+      0%{ transform: translateY(0); }
+      50%{ transform: translateY(-6px); }
+      100%{ transform: translateY(0); }
+    }
 
-        h1 {
-            font-size: 40px;
-            margin-bottom: 16px;
-        }
+    .top-box{
+      display: inline-block;
+      padding: 10px 18px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      border-radius: 999px;
+      border: 1px solid rgba(140,210,255,0.55);
+      background: linear-gradient(90deg, rgba(0,140,255,0.20), rgba(0,0,0,0.20));
+      box-shadow: 0 10px 26px rgba(0,0,0,.35);
+      color: #eaf6ff;
+      margin: 0 auto 26px;
+      width: fit-content;
+      text-shadow: 0 2px 10px rgba(0,0,0,.6);
+    }
 
-        h2 {
-            font-size: 20px;
-            margin-bottom: 16px;
-            margin-top: 30px;
-        }
+    h1{
+      font-size: 40px;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-shadow: 0 2px 14px rgba(0,0,0,.7);
+    }
 
-        p {
-            font-size: 14.5px;
-            max-width: 680px;
-            line-height: 1.6;
-            margin: 0 auto 22px;
-            color: rgba(0, 0, 0, 0.85);
-        }
+    h2{
+      font-size: 20px;
+      margin-bottom: 14px;
+      margin-top: 26px;
+      color: #cfefff;
+      text-shadow: 0 2px 10px rgba(0,0,0,.7);
+      letter-spacing: 1px;
+    }
 
-        ul {
-            list-style-position: inside;
-            padding: 0;
-            margin-bottom: 22px;
-        }
+    p{
+      font-size: 14.5px;
+      max-width: 680px;
+      line-height: 1.7;
+      margin: 0 auto 18px;
+      color: rgba(234,246,255,0.92);
+      text-shadow: 0 2px 10px rgba(0,0,0,.65);
+    }
 
-        li {
-            font-size: 14.5px;
-            margin-bottom: 8px;
-        }
+    ul{
+      list-style: none;
+      padding: 0;
+      margin: 10px auto 20px;
+      max-width: 520px;
+      text-align: left;
+    }
 
-        a {
-            color: #000;
-            font-weight: 500;
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: 0.3s;
-        }
+    li{
+      font-size: 14.5px;
+      margin-bottom: 10px;
+    }
 
-            a:hover {
-                border-bottom: 1px solid #000;
-            }
+    /* Link cards (subtle) */
+    ul li a{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #eaf6ff;
+      text-decoration: none;
+      transition: transform .15s ease, border-color .2s ease, background .2s ease;
+    }
+    ul li a::before{
+      content:"";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(126,203,255,0.9);
+      box-shadow: 0 0 10px rgba(126,203,255,0.55);
+      flex: 0 0 8px;
+    }
+    ul li a:hover{
+      transform: translateY(-2px);
+      border-color: rgba(126,203,255,0.55);
+      background: rgba(0,140,255,0.10);
+    }
 
-        .back-btn {
-            display: inline-block;
-            margin-top: 30px;
-            border: 2px solid #000;
-            padding: 7px 22px;
-            border-radius: 30px;
-            font-size: 13px;
-            transition: all 0.3s;
-        }
+    /* inline links inside paragraphs (like your blogger link) */
+    p a{
+      color: #7ecbff;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 2px solid rgba(126,203,255,0.45);
+      padding-bottom: 2px;
+      transition: border-color .2s ease, color .2s ease;
+    }
+    p a:hover{
+      border-bottom-color: rgba(126,203,255,1);
+      color: #b9ecff;
+    }
 
-            .back-btn:hover {
-                background: #000;
-                color: #fff;
-                transform: scale(1.1);
-            }
+    .back-btn{
+      display: inline-block;
+      margin-top: 26px;
+      border: 1px solid rgba(126,203,255,0.55);
+      padding: 10px 26px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #ffffff;
+      background: linear-gradient(180deg, rgba(0,140,255,0.24), rgba(0,0,0,0.15));
+      box-shadow: 0 14px 30px rgba(0,0,0,.4);
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+      text-decoration: none;
+    }
+    .back-btn:hover{
+      transform: translateY(-2px);
+      border-color: rgba(126,203,255,0.95);
+      background: linear-gradient(180deg, rgba(0,160,255,0.35), rgba(0,0,0,0.15));
+    }
 
-        hr {
-            margin-top: 35px;
-            margin-bottom: 20px;
-            border: 1px solid #000;
-        }
+    hr{
+      margin-top: 30px;
+      margin-bottom: 16px;
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(126,203,255,0.65), transparent);
+      opacity: .95;
+    }
 
-        audio {
-            margin-top: 10px;
-        }
+    /* audio (kept, just styled) */
+    audio{
+      width: min(520px, 92%);
+      margin-top: 10px;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.45));
+    }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 32px;
-            }
-
-            p, li {
-                font-size: 14px;
-            }
-
-            .glass-card {
-                padding: 30px 24px;
-            }
-        }
-    </style>
+    @media (max-width: 600px){
+      h1{ font-size: 32px; }
+      p{ font-size: 14px; }
+      li{ font-size: 14px; }
+      .glass-card{ padding: 28px 20px; }
+      ul{ max-width: 100%; }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="wrapper">
+    <div class="glass-card">
 
-    <div class="wrapper">
-        <div class="glass-card">
+      <div class="top-box">CHECK THE PAGE</div>
 
-            <div class="top-box">CHECK THE PAGE</div>
+      <h1>WELCOME</h1>
 
-            <h1>WELCOME</h1>
+      <p>
+        BELOW ARE LINKS TO CONNECT, EXPLORE, AND DISCOVER. BROWSE, VISIT, OR REACH OUT —
+        THESE LINKS WILL GUIDE YOU TO THE RIGHT SPOT. CLICK AROUND AND SEE WHAT INTERESTS YOU!
+      </p>
 
-            <p>
-                BELOW ARE LINKS TO CONNECT, EXPLORE, AND DISCOVER. BROWSE, VISIT, OR REACH OUT —
-                THESE LINKS WILL GUIDE YOU TO THE RIGHT SPOT. CLICK AROUND AND SEE WHAT INTERESTS YOU!
-            </p>
+      <h2>VISIT THE LINKS:</h2>
 
-            <h2>VISIT THE LINKS:</h2>
+      <p>
+        PERSONAL BLOGGER:
+        <a href="https://myblogger-creation.blogspot.com/p/first-webpage-using-blogger.html" target="_blank">
+          CHECK BLOGGER
+        </a>
+      </p>
 
-            <p>
-                PERSONAL BLOGGER:
-                <a href="https://myblogger-creation.blogspot.com/p/first-webpage-using-blogger.html" target="_blank">
-                    CHECK BLOGGER
-                </a>
-            </p>
+      <ul>
+        <li><a href="https://www.w3schools.com/" target="_blank">W3Schools</a></li>
+        <li><a href="https://www.freecodecamp.org/" target="_blank">FreeCodeCamp</a></li>
+        <li><a href="https://onlinehtmleditor.dev/" target="_blank">Online HTML Editor</a></li>
+      </ul>
 
-            <ul>
-                <li><a href="https://www.w3schools.com/" target="_blank">W3Schools</a></li>
-                <li><a href="https://www.freecodecamp.org/" target="_blank">FreeCodeCamp</a></li>
-                <li><a href="https://onlinehtmleditor.dev/" target="_blank">Online HTML Editor</a></li>
-            </ul>
+      <h2>NETWORKING RESOURCES:</h2>
 
-            <h2>NETWORKING RESOURCES:</h2>
+      <ul>
+        <li><a href="https://www.netacad.com/" target="_blank">Cisco Networking Academy</a></li>
+        <li><a href="https://www.cloudflare.com/learning/" target="_blank">Cloudflare Learning Center</a></li>
+        <li><a href="https://www.ibm.com/topics/networking" target="_blank">IBM Networking Basics</a></li>
+        <li><a href="https://www.geeksforgeeks.org/computer-network-tutorials/" target="_blank">GeeksforGeeks – Computer Networks</a></li>
+        <li><a href="https://www.tutorialspoint.com/computer_networks/index.htm" target="_blank">TutorialsPoint – Computer Networks</a></li>
+      </ul>
 
-            <ul>
-                <li><a href="https://www.netacad.com/" target="_blank">Cisco Networking Academy</a></li>
-                <li><a href="https://www.cloudflare.com/learning/" target="_blank">Cloudflare Learning Center</a></li>
-                <li><a href="https://www.ibm.com/topics/networking" target="_blank">IBM Networking Basics</a></li>
-                <li><a href="https://www.geeksforgeeks.org/computer-network-tutorials/" target="_blank">GeeksforGeeks – Computer Networks</a></li>
-                <li><a href="https://www.tutorialspoint.com/computer_networks/index.htm" target="_blank">TutorialsPoint – Computer Networks</a></li>
-            </ul>
+      <h2>PERSONAL ACCOUNT LINKS:</h2>
 
-            <h2>PERSONAL ACCOUNT LINKS:</h2>
+      <ul>
+        <li><a href="https://www.facebook.com/share/1AMgQEgqfC/?mibextid=wwXIfr" target="_blank">Facebook</a></li>
+        <li><a href="https://www.instagram.com/steff.yyy_/" target="_blank">Instagram</a></li>
+      </ul>
 
-            <ul>
-                <li><a href="https://www.facebook.com/share/1AMgQEgqfC/?mibextid=wwXIfr" target="_blank">Facebook</a></li>
-                <li><a href="https://www.instagram.com/steff.yyy_/" target="_blank">Instagram</a></li>
-            </ul>
+      <a href="index.html" class="back-btn">BACK</a>
 
-            <a href="index.html" class="back-btn">BACK</a>
+      <hr>
 
-            <hr>
+      <audio controls>
+        <source src="music/kanta.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
 
-            <audio controls>
-                <source src="music/kanta.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-
-        </div>
     </div>
+  </div>
 
-    <script>
-        window.addEventListener('load', () => {
-            document.body.classList.add('loaded');
-        });
+  <script>
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+    });
 
-        document.querySelector('.back-btn').addEventListener('click', function (e) {
-            e.preventDefault();
-            const link = this.href;
-            document.body.classList.remove('loaded');
-            setTimeout(() => {
-                window.location.href = link;
-            }, 800);
-        });
-    </script>
+    document.querySelector('.back-btn').addEventListener('click', function (e) {
+      e.preventDefault();
+      const link = this.href;
+      document.body.classList.remove('loaded');
+      setTimeout(() => {
+        window.location.href = link;
+      }, 800);
+    });
+  </script>
 
 </body>
-
 </html>
-
