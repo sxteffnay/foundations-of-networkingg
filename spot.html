@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>The Spot</title>
 
-  <!-- Poppins Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
@@ -25,19 +24,18 @@
     }
     body.loaded{ opacity: 1; }
 
-    /* subtle dark overlay so text stays readable (NOT blur/glass) */
     body::before{
       content:"";
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at 30% 20%, rgba(0,140,255,.15), transparent 55%),
-                  radial-gradient(circle at 70% 80%, rgba(0,255,210,.10), transparent 55%),
-                  rgba(0,0,0,.35);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(0,140,255,.15), transparent 55%),
+        radial-gradient(circle at 70% 80%, rgba(0,255,210,.10), transparent 55%),
+        rgba(0,0,0,.35);
       z-index: -2;
       pointer-events: none;
     }
 
-    /* floating bubbles glow (very light, not too much) */
     body::after{
       content:"";
       position: fixed;
@@ -64,7 +62,7 @@
       padding: 28px 0;
     }
 
-    /* GLASS CARD (slightly nicer + subtle neon glow border) */
+    /* WIDER card (uses side space) */
     .glass-card{
       background: rgba(10, 25, 55, 0.35);
       backdrop-filter: blur(10px);
@@ -75,16 +73,16 @@
         0 18px 55px rgba(0,0,0,0.55),
         0 0 0 1px rgba(255,255,255,0.06) inset,
         0 0 28px rgba(70,180,255,0.18);
-      padding: 38px 42px;
-      max-width: 760px;
-      width: 88%;
-      text-align: center;
+
+      padding: 34px 34px;
+      max-width: 1180px;   /* <-- wider */
+      width: min(94vw, 1180px);
+      text-align: left;    /* <-- better for 2-column */
       animation: float 6s ease-in-out infinite;
       position: relative;
       overflow: hidden;
     }
 
-    /* soft highlight sweep */
     .glass-card::before{
       content:"";
       position:absolute;
@@ -99,6 +97,12 @@
       100%{ transform: translateY(0); }
     }
 
+    /* Header stays centered */
+    .header{
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
     .top-box{
       display: inline-block;
       padding: 10px 18px;
@@ -110,23 +114,47 @@
       background: linear-gradient(90deg, rgba(0,140,255,0.20), rgba(0,0,0,0.20));
       box-shadow: 0 10px 26px rgba(0,0,0,.35);
       color: #eaf6ff;
-      margin: 0 auto 26px;
-      width: fit-content;
       text-shadow: 0 2px 10px rgba(0,0,0,.6);
+      margin-bottom: 14px;
     }
 
     h1{
       font-size: 40px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       letter-spacing: 2px;
       color: #ffffff;
       text-shadow: 0 2px 14px rgba(0,0,0,.7);
     }
 
-    h2{
-      font-size: 20px;
-      margin-bottom: 14px;
+    .intro{
+      font-size: 14.5px;
+      line-height: 1.7;
+      color: rgba(234,246,255,0.92);
+      text-shadow: 0 2px 10px rgba(0,0,0,.65);
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    /* TWO-COLUMN CONTENT AREA */
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* left + right */
+      gap: 22px;
       margin-top: 26px;
+      align-items: start;
+    }
+
+    .panel{
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      padding: 18px 18px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.28);
+    }
+
+    h2{
+      font-size: 18px;
+      margin-bottom: 12px;
       color: #cfefff;
       text-shadow: 0 2px 10px rgba(0,0,0,.7);
       letter-spacing: 1px;
@@ -134,19 +162,30 @@
 
     p{
       font-size: 14.5px;
-      max-width: 680px;
       line-height: 1.7;
-      margin: 0 auto 18px;
+      margin-bottom: 14px;
       color: rgba(234,246,255,0.92);
       text-shadow: 0 2px 10px rgba(0,0,0,.65);
+    }
+
+    /* inline links */
+    p a{
+      color: #7ecbff;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 2px solid rgba(126,203,255,0.45);
+      padding-bottom: 2px;
+      transition: border-color .2s ease, color .2s ease;
+    }
+    p a:hover{
+      border-bottom-color: rgba(126,203,255,1);
+      color: #b9ecff;
     }
 
     ul{
       list-style: none;
       padding: 0;
-      margin: 10px auto 20px;
-      max-width: 520px;
-      text-align: left;
+      margin: 10px 0 0;
     }
 
     li{
@@ -154,7 +193,6 @@
       margin-bottom: 10px;
     }
 
-    /* Link cards (subtle) */
     ul li a{
       display: flex;
       align-items: center;
@@ -182,23 +220,17 @@
       background: rgba(0,140,255,0.10);
     }
 
-    /* inline links inside paragraphs (like your blogger link) */
-    p a{
-      color: #7ecbff;
-      font-weight: 600;
-      text-decoration: none;
-      border-bottom: 2px solid rgba(126,203,255,0.45);
-      padding-bottom: 2px;
-      transition: border-color .2s ease, color .2s ease;
-    }
-    p a:hover{
-      border-bottom-color: rgba(126,203,255,1);
-      color: #b9ecff;
+    .footer{
+      margin-top: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
     }
 
     .back-btn{
       display: inline-block;
-      margin-top: 26px;
       border: 1px solid rgba(126,203,255,0.55);
       padding: 10px 26px;
       border-radius: 999px;
@@ -210,6 +242,8 @@
       box-shadow: 0 14px 30px rgba(0,0,0,.4);
       transition: transform .15s ease, background .2s ease, border-color .2s ease;
       text-decoration: none;
+      text-align: center;
+      min-width: 120px;
     }
     .back-btn:hover{
       transform: translateY(-2px);
@@ -217,85 +251,100 @@
       background: linear-gradient(180deg, rgba(0,160,255,0.35), rgba(0,0,0,0.15));
     }
 
-    hr{
-      margin-top: 30px;
-      margin-bottom: 16px;
-      border: none;
+    .line{
+      flex: 1;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(126,203,255,0.65), transparent);
       opacity: .95;
     }
 
-    /* audio (kept, just styled) */
     audio{
       width: min(520px, 92%);
-      margin-top: 10px;
       filter: drop-shadow(0 10px 18px rgba(0,0,0,.45));
+    }
+
+    /* Responsive: stack to 1 column on phone */
+    @media (max-width: 900px){
+      .glass-card{ text-align: center; }
+      .grid{ grid-template-columns: 1fr; }
+      ul{ text-align: left; }
+      .footer{ justify-content: center; }
+      .line{ display:none; }
     }
 
     @media (max-width: 600px){
       h1{ font-size: 32px; }
       p{ font-size: 14px; }
       li{ font-size: 14px; }
-      .glass-card{ padding: 28px 20px; }
-      ul{ max-width: 100%; }
+      .glass-card{ padding: 26px 18px; }
     }
   </style>
 </head>
 
 <body>
+
   <div class="wrapper">
     <div class="glass-card">
 
-      <div class="top-box">CHECK THE PAGE</div>
+      <div class="header">
+        <div class="top-box">CHECK THE PAGE</div>
+        <h1>WELCOME</h1>
+        <p class="intro">
+          BELOW ARE LINKS TO CONNECT, EXPLORE, AND DISCOVER. BROWSE, VISIT, OR REACH OUT —
+          THESE LINKS WILL GUIDE YOU TO THE RIGHT SPOT. CLICK AROUND AND SEE WHAT INTERESTS YOU!
+        </p>
+      </div>
 
-      <h1>WELCOME</h1>
+      <!-- TWO COLUMNS -->
+      <div class="grid">
 
-      <p>
-        BELOW ARE LINKS TO CONNECT, EXPLORE, AND DISCOVER. BROWSE, VISIT, OR REACH OUT —
-        THESE LINKS WILL GUIDE YOU TO THE RIGHT SPOT. CLICK AROUND AND SEE WHAT INTERESTS YOU!
-      </p>
+        <!-- LEFT COLUMN -->
+        <div class="panel">
+          <h2>VISIT THE LINKS:</h2>
 
-      <h2>VISIT THE LINKS:</h2>
+          <p>
+            PERSONAL BLOGGER:
+            <a href="https://myblogger-creation.blogspot.com/p/first-webpage-using-blogger.html" target="_blank" rel="noopener">
+              CHECK BLOGGER
+            </a>
+          </p>
 
-      <p>
-        PERSONAL BLOGGER:
-        <a href="https://myblogger-creation.blogspot.com/p/first-webpage-using-blogger.html" target="_blank">
-          CHECK BLOGGER
-        </a>
-      </p>
+          <ul>
+            <li><a href="https://www.w3schools.com/" target="_blank" rel="noopener">W3Schools</a></li>
+            <li><a href="https://www.freecodecamp.org/" target="_blank" rel="noopener">FreeCodeCamp</a></li>
+            <li><a href="https://onlinehtmleditor.dev/" target="_blank" rel="noopener">Online HTML Editor</a></li>
+          </ul>
+        </div>
 
-      <ul>
-        <li><a href="https://www.w3schools.com/" target="_blank">W3Schools</a></li>
-        <li><a href="https://www.freecodecamp.org/" target="_blank">FreeCodeCamp</a></li>
-        <li><a href="https://onlinehtmleditor.dev/" target="_blank">Online HTML Editor</a></li>
-      </ul>
+        <!-- RIGHT COLUMN -->
+        <div class="panel">
+          <h2>NETWORKING RESOURCES:</h2>
+          <ul>
+            <li><a href="https://www.netacad.com/" target="_blank" rel="noopener">Cisco Networking Academy</a></li>
+            <li><a href="https://www.cloudflare.com/learning/" target="_blank" rel="noopener">Cloudflare Learning Center</a></li>
+            <li><a href="https://www.ibm.com/topics/networking" target="_blank" rel="noopener">IBM Networking Basics</a></li>
+            <li><a href="https://www.geeksforgeeks.org/computer-network-tutorials/" target="_blank" rel="noopener">GeeksforGeeks – Computer Networks</a></li>
+            <li><a href="https://www.tutorialspoint.com/computer_networks/index.htm" target="_blank" rel="noopener">TutorialsPoint – Computer Networks</a></li>
+          </ul>
 
-      <h2>NETWORKING RESOURCES:</h2>
+          <h2 style="margin-top:18px;">PERSONAL ACCOUNT LINKS:</h2>
+          <ul>
+            <li><a href="https://www.facebook.com/share/1AMgQEgqfC/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="https://www.instagram.com/steff.yyy_/" target="_blank" rel="noopener">Instagram</a></li>
+          </ul>
+        </div>
 
-      <ul>
-        <li><a href="https://www.netacad.com/" target="_blank">Cisco Networking Academy</a></li>
-        <li><a href="https://www.cloudflare.com/learning/" target="_blank">Cloudflare Learning Center</a></li>
-        <li><a href="https://www.ibm.com/topics/networking" target="_blank">IBM Networking Basics</a></li>
-        <li><a href="https://www.geeksforgeeks.org/computer-network-tutorials/" target="_blank">GeeksforGeeks – Computer Networks</a></li>
-        <li><a href="https://www.tutorialspoint.com/computer_networks/index.htm" target="_blank">TutorialsPoint – Computer Networks</a></li>
-      </ul>
+      </div>
 
-      <h2>PERSONAL ACCOUNT LINKS:</h2>
+      <div class="footer">
+        <a href="index.html" class="back-btn">BACK</a>
+        <div class="line"></div>
 
-      <ul>
-        <li><a href="https://www.facebook.com/share/1AMgQEgqfC/?mibextid=wwXIfr" target="_blank">Facebook</a></li>
-        <li><a href="https://www.instagram.com/steff.yyy_/" target="_blank">Instagram</a></li>
-      </ul>
-
-      <a href="index.html" class="back-btn">BACK</a>
-
-      <hr>
-
-      <audio controls>
-        <source src="music/kanta.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
+        <audio controls>
+          <source src="music/kanta.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
 
     </div>
   </div>
