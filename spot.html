@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Spot</title>
+
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: url('images/shot.png') no-repeat center center/cover;
+            color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+            body.loaded {
+                opacity: 1;
+            }
+
+        .wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* GLASS CARD */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            padding: 38px 42px;
+            max-width: 760px;
+            width: 88%;
+            text-align: center;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .top-box {
+            border: 2px solid #000;
+            padding: 10px 20px;
+            font-size: 13px;
+            width: fit-content;
+            margin: 0 auto 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 14.5px;
+            max-width: 680px;
+            line-height: 1.6;
+            margin: 0 auto 22px;
+            color: rgba(0, 0, 0, 0.85);
+        }
+
+        ul {
+            list-style-position: inside;
+            padding: 0;
+            margin-bottom: 22px;
+        }
+
+        li {
+            font-size: 14.5px;
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #000;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+            a:hover {
+                border-bottom: 1px solid #000;
+            }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            border: 2px solid #000;
+            padding: 7px 22px;
+            border-radius: 30px;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+            .back-btn:hover {
+                background: #000;
+                color: #fff;
+                transform: scale(1.1);
+            }
+
+        hr {
+            margin-top: 35px;
+            margin-bottom: 20px;
+            border: 1px solid #000;
+        }
+
+        audio {
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            p, li {
+                font-size: 14px;
+            }
+
+            .glass-card {
+                padding: 30px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="glass-card">
+
+            <div class="top-box">CHECK THE PAGE</div>
+
+            <h1>WELCOME</h1>
+
+            <p>
+                BELOW ARE LINKS TO CONNECT, EXPLORE, AND DISCOVER. BROWSE, VISIT, OR REACH OUT —
+                THESE LINKS WILL GUIDE YOU TO THE RIGHT SPOT. CLICK AROUND AND SEE WHAT INTERESTS YOU!
+            </p>
+
+            <h2>VISIT THE LINKS:</h2>
+
+            <p>
+                PERSONAL BLOGGER:
+                <a href="https://myblogger-creation.blogspot.com/p/first-webpage-using-blogger.html" target="_blank">
+                    CHECK BLOGGER
+                </a>
+            </p>
+
+            <ul>
+                <li><a href="https://www.w3schools.com/" target="_blank">W3Schools</a></li>
+                <li><a href="https://www.freecodecamp.org/" target="_blank">FreeCodeCamp</a></li>
+                <li><a href="https://onlinehtmleditor.dev/" target="_blank">Online HTML Editor</a></li>
+            </ul>
+
+            <h2>NETWORKING RESOURCES:</h2>
+
+            <ul>
+                <li><a href="https://www.netacad.com/" target="_blank">Cisco Networking Academy</a></li>
+                <li><a href="https://www.cloudflare.com/learning/" target="_blank">Cloudflare Learning Center</a></li>
+                <li><a href="https://www.ibm.com/topics/networking" target="_blank">IBM Networking Basics</a></li>
+                <li><a href="https://www.geeksforgeeks.org/computer-network-tutorials/" target="_blank">GeeksforGeeks – Computer Networks</a></li>
+                <li><a href="https://www.tutorialspoint.com/computer_networks/index.htm" target="_blank">TutorialsPoint – Computer Networks</a></li>
+            </ul>
+
+            <h2>PERSONAL ACCOUNT LINKS:</h2>
+
+            <ul>
+                <li><a href="https://www.facebook.com/share/1AMgQEgqfC/?mibextid=wwXIfr" target="_blank">Facebook</a></li>
+                <li><a href="https://www.instagram.com/steff.yyy_/" target="_blank">Instagram</a></li>
+            </ul>
+
+            <a href="index.html" class="back-btn">BACK</a>
+
+            <hr>
+
+            <audio controls>
+                <source src="music/kanta.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
+
+        document.querySelector('.back-btn').addEventListener('click', function (e) {
+            e.preventDefault();
+            const link = this.href;
+            document.body.classList.remove('loaded');
+            setTimeout(() => {
+                window.location.href = link;
+            }, 800);
+        });
+    </script>
+
+</body>
+</html>
