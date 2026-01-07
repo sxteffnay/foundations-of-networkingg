@@ -1,216 +1,238 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Guide Questions</title>
+  <meta charset="UTF-8">
+  <title>Guide Questions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    <style>
-        /* ===== Page Background ===== */
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: "Poppins", Arial, sans-serif;
-            background: url("images/darr.png") center / cover fixed no-repeat;
-            color: white;
-            overflow-x: hidden;
-        }
+  <style>
+    body{
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Poppins", Arial, sans-serif;
+      background: url("images/darr.png") center/cover fixed no-repeat;
+      color: white;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        /* ===== Smooth fade-out class ===== */
-        .fade-out {
-            animation: fadeOut 0.6s forwards ease-in-out;
-        }
+    /* soft readability overlay */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(0,170,255,.18), transparent 55%),
+        radial-gradient(circle at 80% 75%, rgba(0,255,210,.10), transparent 60%),
+        rgba(0,0,0,.32);
+      z-index: -1;
+      pointer-events:none;
+    }
 
-        @keyframes fadeOut {
-            0% {
-                opacity: 1;
-            }
+    /* fade-out */
+    .fade-out { animation: fadeOut 0.6s forwards ease-in-out; }
+    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 
-            100% {
-                opacity: 0;
-            }
-        }
+    .questions-container{
+      max-width: 980px;
+      margin: auto;
+      padding: 38px 18px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      transition: opacity 0.6s ease-in-out;
+    }
 
-        /* ===== Container ===== */
-        .questions-container {
-            max-width: 880px;
-            margin: auto;
-            padding: 40px 20px 70px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 26px;
-            transition: opacity 0.6s ease-in-out;
-        }
+    /* Header card (nicer title) */
+    .header-card{
+      background: rgba(10, 25, 55, 0.35);
+      border: 1px solid rgba(126,203,255,0.30);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 22px;
+      padding: 20px 18px;
+      text-align: center;
+      box-shadow: 0 18px 55px rgba(0,0,0,.45);
+      position: relative;
+      overflow: hidden;
+    }
 
-        /* ===== Title ===== */
-        .title {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 35px;
-            font-weight: 600;
-            color: #fff;
-            text-shadow: 0 0 12px rgba(0,0,0,0.4);
-        }
+    .header-card::before{
+      content:"";
+      position:absolute;
+      inset:-60px;
+      background: radial-gradient(circle at 30% 10%, rgba(255,255,255,.16), transparent 55%);
+      pointer-events:none;
+    }
 
-        /* ===== Back Button (Fixed Lower Left) ===== */
-        .back-button {
-            position: fixed;
-            left: 20px;
-            bottom: 20px;
-            padding: 12px 20px;
-            border-radius: 16px;
-            font-size: 14px;
-            font-weight: 600;
-            color: white;
-            text-decoration: none;
-            background: rgba(0,0,0,0.35);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1.5px solid rgba(255,255,255,0.25);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-            z-index: 1000;
-        }
+    .title{
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 14px rgba(0,0,0,.65);
+      line-height: 1.25;
+    }
 
-            .back-button:hover {
-                transform: scale(1.05);
-                box-shadow: 0 6px 22px rgba(0,0,0,0.5);
-                background: rgba(0,0,0,0.45);
-            }
+    .subtitle{
+      margin-top: 8px;
+      font-size: 13px;
+      opacity: .9;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 10px rgba(0,0,0,.65);
+    }
 
-        /* ===== Glass Card (Colored Borders + Glow) ===== */
-        .question-card {
-            position: relative;
-            padding: 16px 20px;
-            border-radius: 18px;
-            font-size: 14px;
-            line-height: 1.45;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1.6px solid rgba(0, 0, 0, 0.5);
-            box-shadow: inset 0 0 10px rgba(255,255,255,0.06), 0 6px 20px rgba(0,0,0,0.35);
-            transition: transform 0.35s ease, box-shadow 0.35s ease, font-size 0.35s ease;
-            --glow1: #fff;
-            --glow2: #fff;
-            animation: glow 3s infinite alternate;
-        }
+    /* Back button */
+    .back-button{
+      position: fixed;
+      left: 20px;
+      bottom: 20px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+      text-decoration: none;
+      background: rgba(10, 25, 55, 0.40);
+      border: 1px solid rgba(126,203,255,0.35);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 12px 28px rgba(0,0,0,.45);
+      transition: transform .15s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+      z-index: 1000;
+    }
+    .back-button:hover{
+      transform: translateY(-2px);
+      border-color: rgba(126,203,255,0.75);
+      background: rgba(10, 25, 55, 0.55);
+      box-shadow: 0 16px 34px rgba(0,0,0,.55);
+    }
 
-        .q1 {
-            --glow1: rgba(255, 0, 85, 0.8);
-            --glow2: rgba(255, 0, 85, 0.4);
-            border-color: rgba(255,0,85,0.5);
-        }
+    /* Question card base (glass) */
+    .question-card{
+      position: relative;
+      padding: 16px 18px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.6;
+      cursor: pointer;
 
-        .q2 {
-            --glow1: rgba(0, 150, 255, 0.8);
-            --glow2: rgba(0, 150, 255, 0.4);
-            border-color: rgba(0,150,255,0.5);
-        }
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
 
-        .q3 {
-            --glow1: rgba(255, 180, 0, 0.8);
-            --glow2: rgba(255, 180, 0, 0.4);
-            border-color: rgba(255,180,0,0.5);
-        }
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
 
-        .q4 {
-            --glow1: rgba(120, 255, 120, 0.8);
-            --glow2: rgba(120, 255, 120, 0.4);
-            border-color: rgba(120,255,120,0.5);
-        }
+      box-shadow:
+        0 14px 40px rgba(0,0,0,0.40),
+        inset 0 0 0 1px rgba(255,255,255,0.04);
 
-        @keyframes glow {
-            0% {
-                box-shadow: 0 0 6px var(--glow1), 0 0 12px var(--glow2);
-            }
+      transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease;
+      user-select: none;
+    }
 
-            100% {
-                box-shadow: 0 0 14px var(--glow2), 0 0 26px var(--glow1);
-            }
-        }
+    /* Small neon edge strip on the left */
+    .question-card::before{
+      content:"";
+      position:absolute;
+      left: 10px;
+      top: 14px;
+      bottom: 14px;
+      width: 4px;
+      border-radius: 10px;
+      background: var(--accent, rgba(126,203,255,.85));
+      box-shadow: 0 0 18px var(--accentGlow, rgba(126,203,255,.35));
+      opacity: .95;
+    }
 
-        .question-card:hover {
-            transform: scale(1.02);
-        }
+    /* Accents (still different but ocean palette only) */
+    .q1{ --accent: rgba(0,170,255,.95); --accentGlow: rgba(0,170,255,.35); }
+    .q2{ --accent: rgba(126,203,255,.95); --accentGlow: rgba(126,203,255,.32); }
+    .q3{ --accent: rgba(0,255,210,.90); --accentGlow: rgba(0,255,210,.25); }
+    .q4{ --accent: rgba(120,140,255,.95); --accentGlow: rgba(120,140,255,.28); }
 
-        .question-card.active {
-            transform: scale(1.3);
-            font-size: 16px;
-        }
+    .question-card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(126,203,255,0.35);
+      box-shadow:
+        0 18px 55px rgba(0,0,0,0.50),
+        0 0 18px rgba(126,203,255,0.10),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+    }
 
-        @media (max-width: 600px) {
-            .question-card.active {
-                transform: scale(1.15);
-            }
+    /* Active state: readable expansion (not huge) */
+    .question-card.active{
+      transform: scale(1.05);
+      border-color: rgba(126,203,255,0.55);
+      background: rgba(10,25,55,0.35);
+      box-shadow:
+        0 22px 70px rgba(0,0,0,0.55),
+        0 0 26px rgba(126,203,255,0.14),
+        inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
 
-            .title {
-                font-size: 24px;
-            }
-
-            .back-button {
-                font-size: 13px;
-                padding: 8px 16px;
-            }
-        }
-    </style>
+    @media (max-width: 600px){
+      .title{ font-size: 22px; }
+      .question-card{ font-size: 13.5px; }
+      .question-card.active{ transform: scale(1.02); }
+      .back-button{ font-size: 12px; padding: 10px 14px; }
+    }
+  </style>
 </head>
 
 <body>
 
-    <div class="questions-container" id="questionsContainer">
+  <div class="questions-container" id="questionsContainer">
 
-        <div class="title">
-            Guide Questions Based on<br>
-            “The Transformative Role of Networks in Modern Society”
-        </div>
-
-        <div class="question-card q1">
-            In what ways do social media platforms rely on computer networks to enable real-time communication, instant content sharing, live interactions, and global connectivity among users from different countries and cultures, and how do network speed, reliability, and global infrastructure contribute to these functions?
-        </div>
-
-        <div class="question-card q2">
-            How do computer networks support online learning platforms, virtual classrooms, and digital educational tools, and why are these network-based tools important for improving accessibility, collaboration, and flexibility in modern education?
-        </div>
-
-        <div class="question-card q3">
-            How have networks evolved from simple tools for data transfer into complex systems that influence communication, business operations, education, healthcare, and social relationships?
-        </div>
-
-        <div class="question-card q4">
-            Do you think the development of high-speed networks has changed how people communicate and interact on social media across different cultures and countries? Why or why not?
-        </div>
-
+    <div class="header-card">
+      <div class="title">
+        Guide Questions Based on<br>
+        “The Transformative Role of Networks in Modern Society”
+      </div>
+      <div class="subtitle">Click a card to expand / collapse</div>
     </div>
 
-    <!-- Back Button Fixed at Bottom Left -->
-    <a href="index.html" class="back-button" id="backButton">Back to Main</a>
+    <div class="question-card q1">
+      In what ways do social media platforms rely on computer networks to enable real-time communication, instant content sharing, live interactions, and global connectivity among users from different countries and cultures, and how do network speed, reliability, and global infrastructure contribute to these functions?
+    </div>
 
-    <script>
-        const cards = document.querySelectorAll(".question-card");
-        cards.forEach(card => {
-            card.addEventListener("click", () => {
-                card.classList.toggle("active");
-            });
-        });
+    <div class="question-card q2">
+      How do computer networks support online learning platforms, virtual classrooms, and digital educational tools, and why are these network-based tools important for improving accessibility, collaboration, and flexibility in modern education?
+    </div>
 
-        // Smooth fade-out transition
-        const backButton = document.getElementById('backButton');
-        const container = document.getElementById('questionsContainer');
+    <div class="question-card q3">
+      How have networks evolved from simple tools for data transfer into complex systems that influence communication, business operations, education, healthcare, and social relationships?
+    </div>
 
-        backButton.addEventListener('click', function (event) {
-            event.preventDefault(); // stop instant redirect
-            container.classList.add('fade-out');
-            backButton.style.transition = 'opacity 0.6s ease-in-out';
-            backButton.style.opacity = 0; // fade button as well
+    <div class="question-card q4">
+      Do you think the development of high-speed networks has changed how people communicate and interact on social media across different cultures and countries? Why or why not?
+    </div>
 
-            setTimeout(() => {
-                window.location.href = this.href;
-            }, 600); // matches fade-out duration
-        });
-    </script>
+  </div>
+
+  <a href="index.html" class="back-button" id="backButton">Back to Main</a>
+
+  <script>
+    const cards = document.querySelectorAll(".question-card");
+    cards.forEach(card => {
+      card.addEventListener("click", () => {
+        card.classList.toggle("active");
+      });
+    });
+
+    const backButton = document.getElementById('backButton');
+    const container = document.getElementById('questionsContainer');
+
+    backButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      container.classList.add('fade-out');
+      backButton.style.transition = 'opacity 0.6s ease-in-out';
+      backButton.style.opacity = 0;
+
+      setTimeout(() => {
+        window.location.href = this.href;
+      }, 600);
+    });
+  </script>
 
 </body>
-
 </html>
